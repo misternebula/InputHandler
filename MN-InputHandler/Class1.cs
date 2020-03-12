@@ -1,4 +1,5 @@
-﻿using OWML.ModHelper;
+﻿using OWML.Common;
+using OWML.ModHelper;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,8 @@ namespace MN_InputHandler
         public static string selectedMod;
         public static List<string> modList = new List<string>();
         public static int mod = 0;
+
+        bool _enableGUI = false;
 
         void Start()
         {
@@ -46,8 +49,15 @@ namespace MN_InputHandler
             }
         }
 
+        public override void Configure(IModConfig config)
+        {
+            this._enableGUI = config.GetSettingsValue<bool>("enableGUI");
+            base.ModHelper.Console.WriteLine(_enableGUI);
+        }
+
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            
             if (modList.Count > 1)
             {
                 SelectMod(modList[0]);
@@ -56,10 +66,14 @@ namespace MN_InputHandler
 
         private void OnGUI()
         {
-            if (modList.Count != 0)
+            if (_enableGUI)
             {
-                GUI.Label(new Rect(((float)Screen.width / 2) - 150f, 10f, 300f, 20f), ("INPUT ACTIVE FOR : " + modList[mod]));
+                if (modList.Count != 0)
+                {
+                    GUI.Label(new Rect(((float)Screen.width / 2) - 150f, 10f, 300f, 20f), ("INPUT ACTIVE FOR : " + modList[mod]));
+                }
             }
+            
         }
 
         void Update()
