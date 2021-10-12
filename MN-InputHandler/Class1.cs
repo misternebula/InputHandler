@@ -2,6 +2,7 @@
 using OWML.ModHelper;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace MN_InputHandler
@@ -80,7 +81,7 @@ namespace MN_InputHandler
         {
             if (modList.Count > 1)
             {
-                if (Input.GetKeyDown(KeyCode.Comma))
+                if (Keyboard.current[Key.Comma].wasPressedThisFrame)
                 {
                     AudioSource.PlayClipAtPoint(Locator.GetAudioManager().GetAudioClipArray(AudioType.Menu_LeftRight)[0], Locator.GetActiveCamera().transform.position);
                     DeselectMod(modList[mod]);
@@ -90,7 +91,7 @@ namespace MN_InputHandler
                     SelectMod(modList[mod]);
                 }
 
-                if (Input.GetKeyDown(KeyCode.Period))
+                if (Keyboard.current[Key.Period].wasPressedThisFrame)
                 {
                     AudioSource.PlayClipAtPoint(Locator.GetAudioManager().GetAudioClipArray(AudioType.Menu_LeftRight)[0], Locator.GetActiveCamera().transform.position);
                     DeselectMod(modList[mod]);
